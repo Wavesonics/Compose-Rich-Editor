@@ -13,19 +13,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.sp
 import com.mohamedrejeb.richeditor.annotation.ExperimentalRichTextApi
 import com.mohamedrejeb.richeditor.model.RichParagraph.Type.Companion.startText
+import com.mohamedrejeb.richeditor.parser.annotatedstring.RichTextStateAnnotatedStringParser
 import com.mohamedrejeb.richeditor.parser.html.RichTextStateHtmlParser
 import com.mohamedrejeb.richeditor.parser.markdown.RichTextStateMarkdownParser
 import com.mohamedrejeb.richeditor.platform.currentPlatform
 import com.mohamedrejeb.richeditor.utils.*
-import com.mohamedrejeb.richeditor.utils.append
-import com.mohamedrejeb.richeditor.utils.customMerge
-import com.mohamedrejeb.richeditor.utils.isSpecifiedFieldsEquals
-import com.mohamedrejeb.richeditor.utils.unmerge
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -2170,6 +2165,16 @@ class RichTextState internal constructor(
     }
 
     /**
+     * Updates the [RichTextState] with the given [AnnotatedString].
+     *
+     * @param annotatedString The AnnotatedString to update the [RichTextState] with.
+     */
+    fun setAnnotatedString(annotatedString: AnnotatedString) {
+        val richParagraphList = RichTextStateAnnotatedStringParser.encode(annotatedString).richParagraphList
+        updateRichParagraphList(richParagraphList)
+    }
+
+    /**
      * Updates the [RichTextState] with the given [newRichParagraphList].
      * The [RichTextState] will be updated with the given [newRichParagraphList] and the [annotatedString] will be updated.
      *
@@ -2262,6 +2267,15 @@ class RichTextState internal constructor(
      */
     fun toMarkdown(): String {
         return RichTextStateMarkdownParser.decode(this)
+    }
+
+    /**
+     * Decodes the [RichTextState] to a AnnotatedString object.
+     *
+     * @return The AnnotatedString object.
+     */
+    fun toAnnotatedString(): AnnotatedString {
+        return RichTextStateAnnotatedStringParser.decode(this)
     }
 
     /**
