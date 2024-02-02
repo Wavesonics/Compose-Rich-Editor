@@ -18,20 +18,11 @@ import androidx.compose.ui.unit.sp
 import com.mohamedrejeb.richeditor.annotation.ExperimentalRichTextApi
 import com.mohamedrejeb.richeditor.paragraph.RichParagraph
 import com.mohamedrejeb.richeditor.paragraph.type.*
-import com.mohamedrejeb.richeditor.paragraph.type.DefaultParagraph
-import com.mohamedrejeb.richeditor.paragraph.type.OneSpaceParagraph
-import com.mohamedrejeb.richeditor.paragraph.type.OrderedList
-import com.mohamedrejeb.richeditor.paragraph.type.ParagraphType
 import com.mohamedrejeb.richeditor.paragraph.type.ParagraphType.Companion.startText
-import com.mohamedrejeb.richeditor.paragraph.type.UnorderedList
 import com.mohamedrejeb.richeditor.parser.html.RichTextStateHtmlParser
 import com.mohamedrejeb.richeditor.parser.markdown.RichTextStateMarkdownParser
 import com.mohamedrejeb.richeditor.platform.currentPlatform
 import com.mohamedrejeb.richeditor.utils.*
-import com.mohamedrejeb.richeditor.utils.append
-import com.mohamedrejeb.richeditor.utils.customMerge
-import com.mohamedrejeb.richeditor.utils.isSpecifiedFieldsEquals
-import com.mohamedrejeb.richeditor.utils.unmerge
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlin.math.max
@@ -75,7 +66,7 @@ class RichTextState internal constructor(
 
     internal var singleParagraphMode by mutableStateOf(false)
 
-    internal var textLayoutResult: TextLayoutResult? by mutableStateOf(null)
+    var textLayoutResult: TextLayoutResult? by mutableStateOf(null)
         private set
 
     private var lastPressPosition: Offset? by mutableStateOf(null)
@@ -1923,7 +1914,7 @@ class RichTextState internal constructor(
         return richSpan?.style is RichSpanStyle.Link
     }
 
-    private fun getRichSpanByOffset(offset: Offset): RichSpan? {
+    fun getRichSpanByOffset(offset: Offset): RichSpan? {
         this.textLayoutResult?.let { textLayoutResult ->
             val position = textLayoutResult.getOffsetForPosition(offset)
             return getRichSpanByTextIndex(position, true)
