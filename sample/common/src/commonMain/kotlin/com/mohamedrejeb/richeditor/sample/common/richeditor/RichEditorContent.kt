@@ -2,14 +2,12 @@ package com.mohamedrejeb.richeditor.sample.common.richeditor
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -21,7 +19,7 @@ import com.mohamedrejeb.richeditor.ui.material3.OutlinedRichTextEditor
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RichEditorContent() {
     val navigator = LocalNavigator.currentOrThrow
@@ -52,8 +50,7 @@ fun RichEditorContent() {
                     }
                 )
             },
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) { paddingValue ->
             LazyColumn(
                 contentPadding = paddingValue,
@@ -86,6 +83,17 @@ fun RichEditorContent() {
                     BasicRichTextEditor(
                         modifier = Modifier.fillMaxWidth(),
                         state = basicRichTextState,
+                        onRichSpanClick = { span ->
+                            println("clicked")
+                            if (span.style is SpellCheck) {
+                                println("Spell check clicked")
+                                val position =
+                                    basicRichTextState.textLayoutResult
+                                        ?.multiParagraph
+                                        ?.getBoundingBox(span.textRange.start)
+                                println("Position: ${position}")
+                            }
+                        }
                     )
                 }
 
