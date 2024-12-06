@@ -75,8 +75,3 @@ public final class com/mohamedrejeb/richeditor/compose/spellcheck/ui/SpellChecke
 	public static final fun SpellCheckedRichTextEditor (Landroidx/compose/ui/Modifier;ZLandroidx/compose/ui/text/TextStyle;Landroidx/compose/foundation/text/KeyboardOptions;Landroidx/compose/foundation/text/KeyboardActions;ZIIILkotlin/jvm/functions/Function4;Lkotlin/jvm/functions/Function1;Landroidx/compose/foundation/interaction/MutableInteractionSource;Landroidx/compose/ui/graphics/Brush;Lcom/mohamedrejeb/richeditor/compose/spellcheck/SpellCheckState;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;III)V
 }
 
-public final class com/mohamedrejeb/richeditor/compose/spellcheck/utils/SpellCheckUtilsKt {
-	public static final fun isSpelledCorrectly (Ljava/lang/String;Ljava/util/List;)Z
-	public static final fun spellingIsCorrect (Ljava/util/List;Ljava/lang/String;)Z
-}
-
